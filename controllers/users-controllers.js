@@ -48,8 +48,8 @@ const signup = async (req, res, next) => {
         name,
         email,
         password,
-        image: "abcde",
-        places:[]
+        image: req.file.path,
+        places: [],
     });
 
     try {
@@ -78,7 +78,10 @@ const login = async (req, res, next) => {
         return next(new HttpError("Invalid credentials", 401));
     }
 
-    res.json({ message: "Logged in!" });
+    res.json({
+        message: "Logged in!",
+        user: hasUser.toObject({ getters: true }),
+    });
 };
 
 exports.getUsers = getUsers;
