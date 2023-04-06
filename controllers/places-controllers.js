@@ -119,6 +119,12 @@ const updatePlaceById = async (req, res, next) => {
         );
     }
 
+    if (place.creator.toString() !== req.userData.userId) {
+        return next(
+            new HttpError("You are not allowed to edit this place", 401)
+        );
+    }
+
     place.title = title;
     place.description = description;
 
@@ -152,6 +158,12 @@ const deletePlaceById = async (req, res, next) => {
         return next(new HttpError("Could not find place for this id", 404));
     }
 
+    if(place.creator.id!==req.userData.userId){
+        return next(
+            new HttpError("You are not allowed to delete this place", 401)
+        );
+    }
+
     const imagePath = place.image;
 
     try {
@@ -168,7 +180,7 @@ const deletePlaceById = async (req, res, next) => {
         );
     }
 
-    fs.unlink(imagePath,err=>{
+    fs.unlink(imagePath, (err) => {
         console.log(err);
     });
 
