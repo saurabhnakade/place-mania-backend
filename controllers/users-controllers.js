@@ -149,7 +149,7 @@ const login = async (req, res, next) => {
         userId: hasUser.id,
         email: hasUser.email,
         token: token,
-        // name: hasUser.name,
+        name: hasUser.name,
     });
 };
 
