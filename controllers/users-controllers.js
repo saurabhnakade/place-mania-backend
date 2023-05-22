@@ -61,7 +61,7 @@ const signup = async (req, res, next) => {
     if (hasUser) {
         return next(new HttpError("User already exists , please login", 422));
     }
-
+1
     let hashedPass;
     try {
         hashedPass = await bcrypt.hash(password, 12);
@@ -101,6 +101,7 @@ const signup = async (req, res, next) => {
     res.status(201).json({
         userId: createdUser.id,
         email: createdUser.email,
+        name: createdUser.name,
         token: token,
     });
 };
@@ -120,7 +121,6 @@ const login = async (req, res, next) => {
     if (!hasUser) {
         return next(new HttpError("Invalid credentials", 401));
     }
-
 
     let isValidPass = false;
     try {
